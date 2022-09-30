@@ -153,6 +153,16 @@ df = pd.read_excel("Result.xlsx")
 df["Результат"] = df["Курс USD/RUB"]/df["Курс JPY/RUB"]
 df.to_excel("Result.xlsx", index=False)
 
+#change_cells_format
+df = pd.read_excel("Result.xlsx")
+writer = pd.ExcelWriter("Result.xlsx", engine='xlsxwriter')
+df.to_excel(writer, sheet_name='Sheet1', index=False)
+workbook  = writer.book
+worksheet = writer.sheets['Sheet1']
+format1 = workbook.add_format({'num_format': '#,##0.0000_);(#,##0.0000)'})
+worksheet.set_column('B:B', 10, format1)
+worksheet.set_column('E:E', 10, format1)
+
 # Auto-fit_columns_width
 writer = pd.ExcelWriter('Result.xlsx') 
 df.to_excel(writer, sheet_name='Sheet1', index=False, na_rep='NaN')
@@ -163,20 +173,9 @@ for column in df:
     writer.sheets['Sheet1'].set_column(col_idx, col_idx, column_width)
 writer.save()
 
-df = pd.read_excel("Result.xlsx")
-writer = pd.ExcelWriter("Result.xlsx", engine='xlsxwriter')
-df.to_excel(writer, sheet_name='Sheet1', index=False)
-
-#change_cells_format
-workbook  = writer.book
-worksheet = writer.sheets['Sheet1']
-format1 = workbook.add_format({'num_format': '#,##0.0000_);(#,##0.0000)'})
-worksheet.set_column('B:B', 10, format1)
-worksheet.set_column('E:E', 10, format1)
-
 #count_num_rows
-file = pd.read_excel("Result.xlsx")
-df = pd.DataFrame(file)
+#file = pd.read_excel("Result.xlsx")
+#df = pd.DataFrame(file)
 x = df.shape[0] + 1
 
 #declination
